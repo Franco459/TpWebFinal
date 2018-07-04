@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="card col-4" *ngFor="let veh of muestraVehicles">
+      <div class="card-header">{{veh.marca}} {{veh.modelo}} </div>
+      <div class="card-body">
+        <img class="card-img-top" [src]="veh.pathimagen" alt="Imagen sin carga">
+        <button class="btn btn-primary" *ngIf="authService.userLoggedIn" (click)="seleccionarReserva(veh)">Alquilar</button>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+
+<!-- Zone modals -->
+<div class="modal fade" id="reservaModal" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Reserva de vehículo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="avisoReserva"></div>
+        <form id="formReserva" name="formReserva" (ngSubmit)="agregarReserva()">
+          <div class="form-group form-inline">
+            <label>Usuario</label>
+            <input class="form-control" type="text" disabled [(ngModel)]="authService.usuarioLogueado" id="usuarioInput" name="usuarioInput">
+          </div>
+          <div class="form-group form-inline">
+            <label>Vehículo</label>
+            <input class="form-control" type="text" disabled [(ngModel)]="resVehicle.modelo" id="modeloInput" name="modeloInput">
+          </div>
+          <div class="form-group form-inline">
+            <label>Días</label>
+            <input class="form-control" type="number" [(ngModel)]="resVehicle.dias" id="diasInput" name="diasInput">
+          </div>
+          <div class="form-group form-inline">
+            <label>Fecha renta</label>
+            <input class="form-control" type="date" [(ngModel)]="resVehicle.fechaRenta" id="fechaInput" name="fechaInput">
+          </div>
+          <button type="submit" class="btn btn-info">Hacer petición</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

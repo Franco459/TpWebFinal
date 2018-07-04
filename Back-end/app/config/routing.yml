@@ -1,0 +1,8 @@
+concesionaria:
+    resource: "@ConcesionariaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation

@@ -1,3 +1,54 @@
-<p>
-  alta-vehiculo works!
-</p>
+<div class="container">
+  <h4 class="card-header">Registro Vehiculo</h4>
+  <form id="registroVehiculo">
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <input class="form-control" type="number" placeholder="ID Vehiculo" required autofocus>
+        </div>
+        <div class="col">
+          <input class="form-control" type="text" placeholder="Patente" required>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col">
+          <input class="form-control" type="text" placeholder="Marca" required>
+        </div>
+        <div class="col">
+          <input class="form-control" type="text" placeholder="Modelo" required>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="imgVehiculo">PATH Imagen: </label>
+      <input id="imgVehiculo" class="form-group" type="file" />
+    </div>
+  </form>
+  <div class="card-footer">
+    <div class="row justify-content-end">
+      <button class="btn btn-info" id="btnRegistrar">Registrar Vehiculo</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <table class="table responsive">
+    <thead>
+      <th>ID Vehiculo</th>
+      <th>Patente</th>
+      <th>Marca</th>
+      <th>Modelo</th>
+      <th>PathImagen</th>
+      <th>Modificar</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let veh of arrayVehicles">
+
+      </tr>
+    </tbody>
+
+  </table>
+</div>

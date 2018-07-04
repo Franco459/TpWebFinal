@@ -6,15 +6,15 @@
     <div class="card-body">
       <form (ngSubmit)="iniciarSesion()">
         <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-4 col-form-label">Usuario:</label>
-          <div class="col-sm-8">
-            <input type="email" class="form-control" id="inputEmail" name="inputEmail" [(ngModal)]="loginForm.username" placeholder="Ingrese usuario">
+          <label for="inputEmail" class="col-sm-4 col-form-label">Usuario:</label>
+          <div class="col-6">
+            <input type="text" class="form-control" id="inputEmail" name="inputEmail" [(ngModel)]="loginForm.username" placeholder="Ingrese usuario">
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword3" class="col-sm-4 col-form-label">Contraseña:</label>
-          <div class="col-sm-8">
-            <input type="password" class="form-control" id="inputPassword" name="inputPassword" [(ngModal)]="loginForm.password" placeholder="Ingrese Contraseña">
+          <label for="inputPassword" class="col-sm-4 col-form-label">Contraseña:</label>
+          <div class="col-6">
+            <input type="password" class="form-control" id="inputPassword" name="inputPassword" [(ngModel)]="loginForm.password" placeholder="Ingrese Contraseña">
           </div>
         </div>
 

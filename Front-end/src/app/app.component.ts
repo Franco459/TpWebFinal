@@ -5,7 +5,7 @@ import { AuthService } from './services/authservice';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [ AuthService]
+  providers: [ AuthService ]
 })
 export class AppComponent {
   title = 'app';

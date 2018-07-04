@@ -21,6 +21,7 @@ export class PrincipalComponent implements OnInit {
   constructor(private vehicleService:VehicleService, private reservaService: ReservaService, public authService: AuthService) { 
     this.muestraVehicles = new Array<Vehiculo>(); 
     this.reserva = new Reserva();   
+    this.resVehicle = new Vehiculo();
     this.cargarVehiculos();
   }
 
@@ -44,6 +45,7 @@ export class PrincipalComponent implements OnInit {
   agregarReserva()
   {
     this.reserva.usuario = this.authService.usuarioLogueado;
+    this.reserva.vehiculo = this.resVehicle;
     this.reservaService.createReserva(this.reserva).subscribe(
       data =>
       {

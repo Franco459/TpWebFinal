@@ -9,6 +9,7 @@ import { LoginComponent } from './componetns/login/login.component';
 const routes: Routes = [
   { path: '', component: PrincipalComponent},
   { path: 'login', component: LoginComponent},
+  //{ path: 'login', component: LoginComponent},
 ];
 
 export const Rutas_App = RouterModule.forRoot(routes);

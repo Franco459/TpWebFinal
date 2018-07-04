@@ -1,3 +1,36 @@
-<p>
-  header works!
-</p>
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark bg-warning">
+    <a href="#" class="navbar-brand">Concesionario</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="collapsingNavbar">
+      <ul class="navbar-nav mr-auto">
+          <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" href="#" [routerLink]="['']">Principal</a>
+            </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="!authService.userLoggedIn">
+          <a class="nav-link" href="#" [routerLink]="['login']">LOGIN</a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active" *ngIf="authService.userLoggedIn && authService.perfil != 'cliente'">
+          <a class="nav-link" href="#" [routerLink]="['vehiculos']">Vehículos</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="authService.userLoggedIn && authService.perfil != 'cliente'">
+          <a class="nav-link" href="#" [routerLink]="['reserva']">Reservas</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="authService.userLoggedIn && authService.perfil == 'administrador'">
+          <a class="nav-link" href="#" [routerLink]="['usuarios']">Usuarios</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto" *ngIf="authService.userLoggedIn">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownLogueado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{authService.nombreLogueado}}</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownLogueado">
+            <a class="dropdown-item" (click)="logout()">Cerrar sesión</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

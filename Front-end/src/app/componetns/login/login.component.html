@@ -1,3 +1,30 @@
-<p>
-  login works!
-</p>
+<div class="col-md-4 offset-4">
+  <div class="card">
+    <div class="card-header">
+      <h6>ACCESO AL SISTEMA</h6>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="iniciarSesion()">
+        <div class="form-group row">
+          <label for="inputEmail3" class="col-sm-4 col-form-label">Usuario:</label>
+          <div class="col-sm-8">
+            <input type="email" class="form-control" id="inputEmail" name="inputEmail" [(ngModal)]="loginForm.username" placeholder="Ingrese usuario">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword3" class="col-sm-4 col-form-label">Contraseña:</label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" id="inputPassword" name="inputPassword" [(ngModal)]="loginForm.password" placeholder="Ingrese Contraseña">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit">Iniciar sesion</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

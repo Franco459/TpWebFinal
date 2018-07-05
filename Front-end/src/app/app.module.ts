@@ -13,6 +13,7 @@ import { Rutas_App } from './rutas.module';
 import { HeaderComponent } from './components/header/header.component';
 import { AuthService } from './services/authservice';
 import { DataTableModule } from 'angular2-datatable';
+import { AusuariosComponent } from './componetns/ausuarios/ausuarios.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DataTableModule } from 'angular2-datatable';
     AltaVehiculoComponent,
     MuestraVehiculosComponent,
     PrincipalComponent,
-    HeaderComponent
+    HeaderComponent,
+    AusuariosComponent
   ],
   imports: [
     BrowserModule, HttpModule, HttpClientModule, FormsModule, Rutas_App, DataTableModule

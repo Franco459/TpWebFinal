@@ -13,14 +13,14 @@
           <a class="nav-link" href="#" [routerLink]="['login']">LOGIN</a>
         </li>
 
-        <li class="nav-item" routerLinkActive="active" *ngIf="authenticationService.userLoggedIn && authenticationService.perfil != 'cliente'">
-          <a class="nav-link" href="#" [routerLink]="['vehiculos']">Vehículos</a>
+        <li class="nav-item" routerLinkActive="active"  >
+          <a class="nav-link" href="#" [routerLink]="['alta-vehiculo']">Vehículos</a>
         </li>
-        <li class="nav-item" routerLinkActive="active" *ngIf="authenticationService.userLoggedIn && authenticationService.perfil != 'cliente'">
+        <li class="nav-item" routerLinkActive="active" >
           <a class="nav-link" href="#" [routerLink]="['reserva']">Reservas</a>
         </li>
-        <li class="nav-item" routerLinkActive="active" *ngIf="authenticationService.userLoggedIn && authenticationService.perfil == 'administrador'">
-          <a class="nav-link" href="#" [routerLink]="['usuarios']">Usuarios</a>
+        <li class="nav-item" routerLinkActive="active" >
+          <a class="nav-link" href="#" [routerLink]="['ausuarios']">Usuarios</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto" *ngIf="authenticationService.userLoggedIn">
@@ -34,3 +34,7 @@
     </div>
   </nav>
 </header>
+<!--
+*ngIf="authenticationService.userLoggedIn && authenticationService.perfil != 'cliente'"
+*ngIf="authenticationService.userLoggedIn && authenticationService.perfil != 'cliente'"
+*ngIf="authenticationService.userLoggedIn && authenticationService.perfil == 'administrador'"-->

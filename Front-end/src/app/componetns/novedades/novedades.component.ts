@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-novedades',
@@ -10,7 +9,7 @@ export class NovedadesComponent implements OnInit {
   nump = 0; numd = 0; texto = "";
   tamMaximo = 150; longMensaje = 0;
 
-  constructor(private modalService: NgbModal) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -20,7 +19,7 @@ export class NovedadesComponent implements OnInit {
   }
 
   enviarMsj(modal){
-    this.modalService.open(modal, {centered: true});
+    //this.modalService.open(modal, {centered: true});
   }
 
   limpiar(){

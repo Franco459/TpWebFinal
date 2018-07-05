@@ -1,3 +1,146 @@
-<p>
-  reserva works!
-</p>
+<div>
+  <div class="card-header">
+    <h3>Registro de usuarios</h3>
+  </div>
+  <div class="card-body">
+    <form action="">
+      <div class="form-group row">
+        <div class="col-4">
+          <label for="usuarioReserva">Usuario</label>
+          <select class="form-control">
+            <!--<option *ngFor="" [value]="">{{}}</option>
+-->
+          </select>
+
+        </div>
+        <div class="form-group row">
+          <div class="col-4">
+            <label for="usuarioReserva">Vehiculo</label>
+            <select class="form-control">
+              <!--  <option *ngFor="" [value]="">{{}}</option>
+              -->
+            </select>
+
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-4">
+          <label for="costoReserva">Ingrese Costo</label>
+          <input type="number" class="form-control" name="costoReserva" placeholder="$$$$" id="costoReserva">
+        </div>
+        <div class="col-4">
+          <label for="fechaReserva">Fecha de Reserva</label>
+
+          <input type='date' class="form-control" id='datetimepicker4' />
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-3">
+          <label for="diasReserva">Cantidad de dias</label>
+          <input type="number" class="form-control" name="diasReserva" placeholder="**" id="diasReserva">
+
+        </div>
+      </div>
+      <div class="form-control">
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <button class="btn btn-primary">Reservar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!-- <table class="table table-responsive table-bordered" [mfRowsOnPage]="5">
+      <thead>
+        <th>
+          <mfDefaultSorter by="">Usuario</mfDefaultSorter>
+        </th>
+        <th>
+          <mfDefaultSorter by="">Vehiculo</mfDefaultSorter>
+
+        </th>
+        <th>
+          <mfDefaultSorter by="">Costo</mfDefaultSorter>
+        </th>
+        <th>
+          <mfDefaultSorter by="">Fecha</mfDefaultSorter>
+
+        </th>
+
+        <th>
+          <mfDefaultSorter by="">dias</mfDefaultSorter>
+
+        </th>
+        <th>
+          <mfDefaultSorter by="">estado</mfDefaultSorter>
+
+        </th>
+        <th>
+          Acciones
+        </th>
+      </thead>
+      <tbody>
+        <tr >
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <button type="button" class="btn btn-info">Habilitar/Deshabilitar</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-info">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+          </td>
+        </tr>
+
+      </tfoot>
+    </table>
+  <ng-template #modalEdit let-d="dismiss" let-c="close">
+  <div class="modal-header"> {{ }}<button class="close" type="close" (click)="c('')">X</button></div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="nombreEdit">Usuario</label>
+      <select class="form-control">
+       <option *ngFor="" [value]="">{{}}</option>   
+      </select> 
+    </div>
+    <div class="form-group">
+      <label for="profesorEdit">Vehiculo</label>
+      <select class="form-control">
+       <option *ngFor="" [value]="">{{}}</option>   
+      </select> 
+     </div>
+    <div class="form-group">
+      <label for="">Dias</label>
+      <input [(ngModel)]="" type="number" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="">Costo</label>
+      <input [(ngModel)]="" type="number" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="">Fecha</label>
+      <input type='date' class="form-control" id='datetimepicker4' />
+      
+      </div>
+    <div class="form-group">
+      <label for="">Estado</label>
+      <input [(ngModel)]="" type="text" class="form-control">
+    </div>
+    
+    <button type="button" class="btn btn-success" (click)="confirmarCat()">Guardar</button>
+  </div>
+</ng-template>
+  -->
+  </div>
+</div>

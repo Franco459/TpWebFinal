@@ -1,0 +1,6 @@
+#idNovedad,#txtVehiculo,#txtmsj,#btnEnviar,#btnCerrar{
+    border-radius: 0;
+}
+#btnEnviar{
+    float: right;
+}

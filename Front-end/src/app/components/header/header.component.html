@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-warning">
+  <nav class="navbar navbar-expand-md navbar-dark bg-danger">
     <a href="#" class="navbar-brand">Concesionario</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
       <span class="navbar-toggler-icon"></span>
@@ -12,16 +12,19 @@
         <li class="nav-item" routerLinkActive="active" *ngIf="!authenticationService.userLoggedIn">
           <a class="nav-link" href="#" [routerLink]="['login']">LOGIN</a>
         </li>
-
+        <li class="nav-item" routerLinkActive="active" >
+            <a class="nav-link" href="#" [routerLink]="['ausuarios']">Usuarios</a>
+          </li>
         <li class="nav-item" routerLinkActive="active"  >
-          <a class="nav-link" href="#" [routerLink]="['alta-vehiculo']">Vehículos</a>
+          <a class="nav-link" href="#" [routerLink]="['novedades']">Novedades</a>
         </li>
+        <li class="nav-item" routerLinkActive="active"  >
+            <a class="nav-link" href="#" [routerLink]="['vehiculos']">vehiculos</a>
+          </li>
         <li class="nav-item" routerLinkActive="active" >
           <a class="nav-link" href="#" [routerLink]="['reserva']">Reservas</a>
         </li>
-        <li class="nav-item" routerLinkActive="active" >
-          <a class="nav-link" href="#" [routerLink]="['ausuarios']">Usuarios</a>
-        </li>
+        
       </ul>
       <ul class="navbar-nav ml-auto" *ngIf="authenticationService.userLoggedIn">
         <li class="nav-item dropdown">
@@ -35,6 +38,7 @@
   </nav>
 </header>
 <!--
+  *ngIf="authenticationService.userLoggedIn && authenticationService.perfil == 'administrador'"
 *ngIf="authenticationService.userLoggedIn && authenticationService.perfil != 'cliente'"
-*ngIf="authenticationService.userLoggedIn && authenticationService.perfil != 'cliente'"
+*ngIf="authenticationService.userLoggedIn && authenticationService.perfil == 'administrador'"
 *ngIf="authenticationService.userLoggedIn && authenticationService.perfil == 'administrador'"-->

@@ -14,6 +14,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { AuthService } from './services/authservice';
 import { DataTableModule } from 'angular2-datatable';
 import { AusuariosComponent } from './componetns/ausuarios/ausuarios.component';
+import { NovedadesComponent } from './componetns/novedades/novedades.component';
+import { ReservaComponent } from './componetns/reserva/reserva.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { AusuariosComponent } from './componetns/ausuarios/ausuarios.component';
     MuestraVehiculosComponent,
     PrincipalComponent,
     HeaderComponent,
-    AusuariosComponent
+    AusuariosComponent,
+    NovedadesComponent,
+    ReservaComponent
   ],
   imports: [
     BrowserModule, HttpModule, HttpClientModule, FormsModule, Rutas_App, DataTableModule

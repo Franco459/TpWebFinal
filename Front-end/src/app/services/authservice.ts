@@ -21,20 +21,8 @@ export class AuthService {
   logout() {
       localStorage.removeItem('usuarioLogueado');
       this.userLoggedIn = false;
-      this.cambiarEstado(this.usuarioLogueado.usuario).subscribe(
-        data =>
-        {
-        },
-        error =>
-        {
-
-        }
-    );
     this.usuarioLogueado = null;
 
   } 
-  cambiarEstado(username:string)
-  {
-    return this.http.post('http://localhost/proyectoFinal/web/app_dev.php/usuario/logout', JSON.stringify({ username: username }))
-  }
+
 }

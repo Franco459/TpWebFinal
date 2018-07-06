@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   
-  login()
+  iniciarSesion()
   {
     this.authService.login(this.loginForm.username, this.loginForm.password).subscribe(
       data => 
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
         console.log(user);
         if(user)
         {
-          if(user.username != "" && user.activo == false){
+          if(user.username != ""){
             this.authService.userLoggedIn = true;
             localStorage.setItem("usuarioLogueado", JSON.stringify(user));
             localStorage.setItem("perfil", user.perfil);
@@ -37,10 +37,6 @@ export class LoginComponent implements OnInit {
             this.authService.nombreLogueado = user.username;
             this.authService.usuarioLogueado = new Usuario(user.id, user.apellido, user.nombres, user.dni, user.email, user.telefono, user.username, "NELSON", user.perfil);
             this.router.navigateByUrl('');
-          }
-          else if(user.activo == true)
-          {
-            $('#alertaLogin').html("<div class='alert alert-danger'>Usuario ya conectado.</div>");            
           }
           else
           {

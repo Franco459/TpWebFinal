@@ -1,39 +1,44 @@
 <div class="container">
-  <div id="idNovedad" class="card">
-    <div class="card-header">
-      <h1>Novedad Vehículo</h1>
-    </div>
+  <div class="card" *ngIf="authService.perfil == 'cliente'">
+    <div class="card-header">Agregar novedad</div>
     <div class="card-body">
-      <div class="form-group">
-        <label for="txtVehiculo">Vehículo: </label>
-        <select class="form-control" name="novVehiculo" id="txtVehiculo">
-          <option value="auto1">Auto1</option>
-          <option value="auto2">Auto2</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <div>
-          Caracteres escritos: {{longMensaje}}, caracteres restantes: {{tamMaximo - longMensaje}}
+      <div id="alertaEnviado"></div>
+      <form (ngSubmit)="agregarNovedad()">
+        <div class="form-group form-inline">
+          <label>Mensaje</label>
+          <textarea class="form-control" id="msj" name="msj" [(ngModel)]="newNovedad.Texto"></textarea>
         </div>
-        <textarea id="txtmsj" placeholder="Redacta tu opinión..." class="form-control" [(ngModel)]="texto" (ngModelChange)="cambLong()"
-          rows="6" [maxlength]="tamMaximo"></textarea>
-      </div>
+        <button type="submit" class="btn btn-info">Enviar</button>
+      </form>
     </div>
-    <div id="idFoot" class="card-footer">
-      <button id="btnEnviar" class="btn btn-success " (click)="enviarMsj(envmsj)">Enviar</button>
-    </div>
+  </div>
+  <div class="card" *ngIf="authService.perfil != 'cliente'">
+      <table class="table responsive" [mfData]="arrayNovedades" #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+            <th>
+                <mfDefaultSorter by="Usuario.usuario">Usuario</mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by="Texto">Novedad</mfDefaultSorter>
+      
+              </th>
+              <th>
+                <mfDefaultSorter by="estado">Estado</mfDefaultSorter>
+              </th>
+              <th>
+                Acciones
+              </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let nov of mf.data">
+            <td>{{nov.Usuario.usuario}}</td>
+            <td>{{nov.Texto}}</td>
+            <td>{{nov.estado}}</td>
+            <td>
+              <button type="button" (click)="revisarNovedad(nov)" class="btn btn-info">Procesar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
   </div>
 </div>
-
-<ng-template #envmsj let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title">Mensaje Enviado</h4>
-    <button type="button" class="close" (click)="c('')">x</button>
-  </div>
-  <div id="idMsj" class="modal-body">
-    Tu opinión ha sido enviada. Gracias por colaborar :)
-  </div>
-  <div class="modal-footer">
-    <button id="btnCerrar" type="button" class="btn btn-secondary" (click)="c('')">Cerrar</button>
-  </div>
-</ng-template>

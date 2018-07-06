@@ -12,16 +12,16 @@
         <li class="nav-item" routerLinkActive="active" *ngIf="!authenticationService.userLoggedIn">
           <a class="nav-link" href="#" [routerLink]="['login']">LOGIN</a>
         </li>
-        <li class="nav-item" routerLinkActive="active" >
+        <li class="nav-item" routerLinkActive="active" *ngIf="authenticationService.userLoggedIn && authenticationService.perfil == 'administrador'" >
             <a class="nav-link" href="#" [routerLink]="['ausuarios']">Usuarios</a>
           </li>
-        <li class="nav-item" routerLinkActive="active"  >
+        <li class="nav-item" routerLinkActive="active"  *ngIf="authenticationService.userLoggedIn">
           <a class="nav-link" href="#" [routerLink]="['novedades']">Novedades</a>
         </li>
-        <li class="nav-item" routerLinkActive="active"  >
+        <li class="nav-item" routerLinkActive="active" *ngIf="authenticationService.userLoggedIn && authenticationService.perfil == 'administrativo'">
             <a class="nav-link" href="#" [routerLink]="['vehiculos']">vehiculos</a>
           </li>
-        <li class="nav-item" routerLinkActive="active" >
+        <li class="nav-item" routerLinkActive="active" *ngIf="authenticationService.userLoggedIn && authenticationService.perfil == 'administrativo'">
           <a class="nav-link" href="#" [routerLink]="['reserva']">Reservas</a>
         </li>
         

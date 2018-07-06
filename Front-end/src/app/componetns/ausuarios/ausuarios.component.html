@@ -3,87 +3,97 @@
     <h4>Registro de usuarios</h4>
   </div>
   <div class="card-body">
-    <form action="">
+    <div id="avisoAgregado"></div>
+
+    <form (ngSubmit)="agregarUsuario()">
       <div class="form-group row">
         <div class="col-4">
           <label for="apellido">Ingrese apellido</label>
-          <input type="text" class="form-control" name="apellido" placeholder="Ingrese apellido" id="apellido">
+          <input type="text" class="form-control" name="apellido" [(ngModel)]="newUsuario.apellido" placeholder="Ingrese apellido"
+            id="apellido">
         </div>
         <div class="col-4">
           <label for="nombre">Ingrese nombres</label>
-          <input type="text" class="form-control" name="nombre" placeholder="Ingrese nombres" id="nombre">
+          <input type="text" class="form-control" name="nombre" [(ngModel)]="newUsuario.nombres" placeholder="Ingrese nombres" id="nombre">
         </div>
       </div>
       <div class="form-group row">
         <div class="col-4">
           <label for="dni">Ingrese dni</label>
-          <input type="number" class="form-control" name="dni" placeholder="###########" id="dni">
+          <input type="number" class="form-control" name="dni" [(ngModel)]="newUsuario.dni" placeholder="###########" id="dni">
         </div>
         <div class="col-4">
           <label for="telefono">Ingrese telefono</label>
-          <input type="number" class="form-control" name="telefono" placeholder="###########" id="telefono">
+          <input type="number" class="form-control" name="telefono" [(ngModel)]="newUsuario.telefono" placeholder="###########" id="telefono">
         </div>
 
       </div>
       <div class="form-group row">
         <div class="col-4">
           <label for="contrasena"> Ingrese contraseña</label>
-          <input type="text" class="form-control" name="contrasena" id="contrasena" placeholder="***************">
+          <input type="text" class="form-control" name="contrasena" id="contrasena" [(ngModel)]="newUsuario.password" placeholder="***************">
         </div>
         <div class="col-4">
           <label for="usuario">Ingrese usuario</label>
-          <input type="text" class="form-control" name="usuario" placeholder="xxx619" id="usuario">
+          <input type="text" class="form-control" name="usuario" placeholder="xxx619" [(ngModel)]="newUsuario.usuario" id="usuario">
         </div>
       </div>
       <div class="form-group row">
         <div class="col-4">
-            <label for="email">Ingrese email</label>
-            <input type="text" class="form-control" name="email" placeholder="usuario@compañia.com" id="email">
-          
+          <label for="email">Ingrese email</label>
+          <input type="text" class="form-control" name="email" [(ngModel)]="newUsuario.email" placeholder="usuario@compañia.com" id="email">
+
         </div>
         <div class="col-sm-4">
           <label for="selectv" class="col-sm-4 col-form-label">Registrar como:</label>
-          <select id="selectv" class="custom-select mr-sm-2">
-            <option selected>Cliente</option>
-            <option>Administrador</option>
+          <select id="selectv" name="selectv" class="custom-select mr-sm-2" [(ngModel)]="newUsuario.perfil">
+            <option selected value="cliente">Cliente</option>
+            <option value="administrativo">Administrativo</option>
+            <option value="administrador">Administrador</option>
           </select>
         </div>
       </div>
       <div class="form-control">
         <div class="form-group row">
           <div class="col-sm-4">
-          <button class="btn btn-primary">Registrar usuario</button>
-        </div>
-        <div class="col-sm-4">
-       
-          <button type="reset" class=" btn btn-primary  ">Limpiar</button>
-        </div>
+            <button type="submit" class="btn btn-primary">Registrar usuario</button>
+          </div>
+          <div class="col-sm-4">
+
+            <button type="reset" class=" btn btn-primary  ">Limpiar</button>
+          </div>
         </div>
       </div>
     </form>
-    <!-- <table class="table table-responsive table-bordered" [mfRowsOnPage]="5">
+    <div id="avisoBorrado"></div>
+
+    <table class="table responsive" [mfData]="arrayUsuarios" #mf="mfDataTable" [mfRowsOnPage]="5">
       <thead>
         <th>
-          <mfDefaultSorter by="">Usuario</mfDefaultSorter>
+          <mfDefaultSorter by="usuario">Usuario</mfDefaultSorter>
         </th>
         <th>
-          <mfDefaultSorter by="">Apellido</mfDefaultSorter>
+          <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
 
         </th>
         <th>
-          <mfDefaultSorter by="">Nombres</mfDefaultSorter>
+          <mfDefaultSorter by="nombres">Nombres</mfDefaultSorter>
         </th>
         <th>
-          <mfDefaultSorter by="">Perfil</mfDefaultSorter>
+          <mfDefaultSorter by="perfil">Perfil</mfDefaultSorter>
 
         </th>
 
         <th>
-          <mfDefaultSorter by="">email</mfDefaultSorter>
+          <mfDefaultSorter by="email">email</mfDefaultSorter>
 
         </th>
         <th>
-          <mfDefaultSorter by="">Telefono</mfDefaultSorter>
+          <mfDefaultSorter by="telefono">Telefono</mfDefaultSorter>
+
+        </th>
+        <th>
+          <mfDefaultSorter by="password">Contraseña</mfDefaultSorter>
 
         </th>
         <th>
@@ -91,18 +101,17 @@
         </th>
       </thead>
       <tbody>
-        <tr >
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr *ngFor="let user of mf.data">
+          <td>{{ user.usuario }}</td>
+          <td>{{user.apellido }}</td>
+          <td>{{user.nombres}}</td>
+          <td>{{user.perfil}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.telefono}}</td>
+          <td>{{user.password}}</td>
           <td>
-            <button type="button" class="btn btn-info">Modificar</button>
-          </td>
-          <td>
-            <button type="button" class="btn btn-info">Modificar</button>
+            <button type="button" class="btn btn-info" (click)="modificarUsuario(user)" data-toggle="modal" data-target="#modalEdit">Modificar</button>
+            <button type="button" class="btn btn-warning" (click)="borrarUsuario(user)">Eliminar</button>
           </td>
         </tr>
       </tbody>
@@ -115,47 +124,83 @@
 
       </tfoot>
     </table>
-  <ng-template #modalEdit let-d="dismiss" let-c="close">
-  <div class="modal-header"> {{ }}<button class="close" type="close" (click)="c('')">X</button></div>
-  <div class="modal-body">
-    <div class="form-group">
-      <label for="nombreEdit">Nombres</label>
-      <input [(ngModel)]="" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="profesorEdit">Apellido</label>
-      <input [(ngModel)]="" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="">DNI</label>
-      <input [(ngModel)]="" type="number" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="">Telefono</label>
-      <input [(ngModel)]="" type="number" class="form-control">
-    </div>
-
-    <div class="form-group">
-      <label for="">Contraseña</label>
-      <input [(ngModel)]="" type="text" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="">Usuario</label>
-      <input [(ngModel)]="" type="text" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="">Email</label>
-      <input [(ngModel)]="" type="text" class="form-control">
-    </div>
-    <div class="col-sm-4">
-          <label for="selectv" class="col-sm-4 col-form-label">Usuario:</label>
-           <select class="form-control" [(ngModel)]="">
-            <option *ngFor="" [value]="">{{}}</option>
-        </select>
-        </div>
-    <button type="button" class="btn btn-success" (click)="confirmarCat()">Guardar</button>
   </div>
-</ng-template>
-  -->
+</div>
+
+
+
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edición de vehículo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="avisoModificado"></div>
+        <form (ngSubmit)="actualizarUsuario()">
+          <div class="form-group row">
+            <div class="col-4">
+              <label for="apellido">Ingrese apellido</label>
+              <input type="text" class="form-control" name="apellido" [(ngModel)]="modUsuario.apellido" placeholder="Ingrese apellido"
+                id="apellido">
+            </div>
+            <div class="col-4">
+              <label for="nombre">Ingrese nombres</label>
+              <input type="text" class="form-control" name="nombre" [(ngModel)]="modUsuario.nombres" placeholder="Ingrese nombres" id="nombre">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label for="dni">Ingrese dni</label>
+              <input type="number" class="form-control" name="dni" [(ngModel)]="modUsuario.dni" placeholder="###########" id="dni">
+            </div>
+            <div class="col-4">
+              <label for="telefono">Ingrese telefono</label>
+              <input type="number" class="form-control" name="telefono" [(ngModel)]="modUsuario.telefono" placeholder="###########" id="telefono">
+            </div>
+
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label for="contrasena"> Ingrese contraseña</label>
+              <input type="text" class="form-control" name="contrasena" id="contrasena" [(ngModel)]="modUsuario.password" placeholder="***************">
+            </div>
+            <div class="col-4">
+              <label for="usuario">Ingrese usuario</label>
+              <input type="text" class="form-control" name="usuario" placeholder="xxx619" [(ngModel)]="modUsuario.usuario" id="usuario">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4">
+              <label for="email">Ingrese email</label>
+              <input type="text" class="form-control" name="email" [(ngModel)]="modUsuario.email" placeholder="usuario@compañia.com" id="email">
+
+            </div>
+            <div class="col-sm-4">
+              <label for="selectv" class="col-sm-4 col-form-label">Registrar como:</label>
+              <select id="selectv" name="selectv" class="custom-select mr-sm-2" [(ngModel)]="modUsuario.perfil">
+                <option selected value="cliente">Cliente</option>
+                <option value="administrativo">Administrativo</option>
+                <option value="administrador">Administrador</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-control">
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <button type="submit" class="btn btn-primary">Registrar usuario</button>
+              </div>
+              <div class="col-sm-4">
+
+                <button type="reset" class=" btn btn-primary  ">Limpiar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

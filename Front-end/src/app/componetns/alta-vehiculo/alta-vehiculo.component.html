@@ -1,54 +1,118 @@
 <div class="container">
   <h4 class="card-header">Registro Vehiculo</h4>
-  <form id="registroVehiculo">
+  <form id="registroVehiculo" (ngSubmit)="agregarVehiculo()">
     <div class="form-group">
       <div class="row">
         <div class="col">
-          <input class="form-control" type="number" placeholder="ID Vehiculo" required autofocus>
-        </div>
-        <div class="col">
-          <input class="form-control" type="text" placeholder="Patente" required>
+          <input class="form-control" type="text" placeholder="Patente" id="patente" name="patente" [(ngModel)]="newVehicle.patente"
+            required>
         </div>
       </div>
     </div>
     <div class="form-group">
       <div class="row">
         <div class="col">
-          <input class="form-control" type="text" placeholder="Marca" required>
+          <input class="form-control" type="text" placeholder="Marca" id="marca" name="marca" [(ngModel)]="newVehicle.marca" required>
         </div>
         <div class="col">
-          <input class="form-control" type="text" placeholder="Modelo" required>
+          <input class="form-control" type="text" placeholder="Modelo" id="modelo" name="modelo" [(ngModel)]="newVehicle.modelo" required>
         </div>
       </div>
     </div>
     <div class="form-group">
-      <label for="imgVehiculo">PATH Imagen: </label>
-      <input id="imgVehiculo" class="form-group" type="file" />
+      <label for="imgVehiculo">URL Imagen: </label>
+      <input id="imgVehiculo" [(ngModel)]="newVehicle.pathimagen" name="imgVehiculo">
+    </div>
+    <div class="row justify-content-end">
+      <button class="btn btn-info" id="btnRegistrar" type="submit">Registrar Vehiculo</button>
     </div>
   </form>
   <div class="card-footer">
-    <div class="row justify-content-end">
-      <button class="btn btn-info" id="btnRegistrar">Registrar Vehiculo</button>
-    </div>
+
   </div>
 </div>
 
 
 <div class="container">
-  <table class="table responsive">
+  <table class="table responsive" [mfData]="arrayVehicles" #mf="mfDataTable" [mfRowsOnPage]="5">
     <thead>
-      <th>ID Vehiculo</th>
-      <th>Patente</th>
-      <th>Marca</th>
-      <th>Modelo</th>
-      <th>PathImagen</th>
-      <th>Modificar</th>
+      <th>
+        <mfDefaultSorter by="id">ID Vehiculo</mfDefaultSorter>
+      </th>
+      <th>
+        <mfDefaultSorter by="patente">Patente</mfDefaultSorter>
+      </th>
+      <th>
+        <mfDefaultSorter by="marca">Marca</mfDefaultSorter>
+      </th>
+      <th>
+        <mfDefaultSorter by="modelo">Modelo</mfDefaultSorter>
+      </th>
+      <th>
+        Imágenes
+      </th>
+      <th>Acciones</th>
     </thead>
     <tbody>
-      <tr *ngFor="let veh of arrayVehicles">
+      <tr *ngFor="let veh of mf.data">
+        <td>{{veh.id}}</td>
+        <td>{{veh.patente}}</td>
+        <td>{{veh.marca}}</td>
+        <td>{{veh.modelo}}</td>
+        <td>
+          <img [src]="pathimagen"> 
+        </td>
+        <td>
+          <button class="btn btn-info" (click)="modificarVeh(veh)" data-toggle="modal" data-target="#modalEdit">Modificar</button>
+          <button class="btn btn-warning" (click)="borrarVehiculo(veh)">Borrar</button>
+          
+        </td>
 
       </tr>
     </tbody>
 
   </table>
+</div>
+
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edición de vehículo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="registroVehiculo" (ngSubmit)="actualizarVehiculo()">
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <input class="form-control" type="text" placeholder="Patente" id="patente" name="patente" [(ngModel)]="modVehicle.patente"
+                  required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <input class="form-control" type="text" placeholder="Marca" id="marca" name="marca" [(ngModel)]="modVehicle.marca" required>
+              </div>
+              <div class="col">
+                <input class="form-control" type="text" placeholder="Modelo" id="modelo" name="modelo" [(ngModel)]="modVehicle.modelo" required>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="imgVehiculo">URL Imagen: </label>
+            <input id="imgVehiculo" [(ngModel)]="modVehicle.pathimagen" name="imgVehiculo">
+          </div>
+          <div class="row justify-content-end">
+            <button class="btn btn-info" id="btnRegistrar" type="submit">Guardar</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
 </div>

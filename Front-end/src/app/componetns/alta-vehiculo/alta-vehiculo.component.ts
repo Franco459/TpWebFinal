@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Vehiculo } from '../../models/vehiculo';
 import { VehicleService } from '../../services/vehicleservice';
-declare var jquery:any;
-declare var $:any;
+
 @Component({
   selector: 'app-alta-vehiculo',
   templateUrl: './alta-vehiculo.component.html',
@@ -21,22 +20,12 @@ export class AltaVehiculoComponent implements OnInit {
     
   }
 
-  borrarVehiculo(veh:Vehiculo){
-    this.vehService.eliminarVehiculo(veh).subscribe(
-      data =>
-      {
-        this.cargarVehiculos();
-        $('#avisoBorrado').html("<div class='alert alert-info'>Se ha borrado con éxito el vehículo ID " + veh.id + " </div>");
-      }
-    );
-  }
+
   actualizarVeh()
   {
     this.vehService.updateVehiculo(this.modVehicle).subscribe(
       result=>{
         this.cargarVehiculos();
-        $('#avisoModificado').html("<div class='alert alert-info'>Se ha modificado con éxito el vehículo ID " + this.modVehicle.id + " </div>");
-
       },
       error =>{
 

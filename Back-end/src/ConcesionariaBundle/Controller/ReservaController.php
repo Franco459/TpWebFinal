@@ -7,6 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
+
+/*AGREGADOs*/
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+
 /**
  * Reserva controller.
  *
@@ -23,12 +31,16 @@ class ReservaController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $reservas = $em->getRepository('ConcesionariaBundle:Reserva')->findAll();
-
-        return $this->render('reserva/index.html.twig', array(
-            'reservas' => $reservas,
-        ));
+        $usuario = $em->getRepository('ConcesionariaBundle:Reserva')->findAll();
+        $response = new Response();
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $response->setContent(json_encode(array(
+        'reservas' => $serializer->serialize($usuario, 'json'),
+        )));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
@@ -106,17 +118,15 @@ class ReservaController extends Controller
      */
     public function deleteAction(Request $request, Reserva $reserva)
     {
-        $form = $this->createDeleteForm($reserva);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($reserva);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('reserva_index');
+        $sn = $this->getDoctrine()->getManager();
+    
+        $cat = $this->getDoctrine()->getRepository('ConcesionariaBundle:Reseva')->find($id);
+        $sn->remove($cat);
+        $sn->flush();
+        $result['status'] = 'ok';
+        return new Response(json_encode($result), 200);;
     }
+
 
     /**
      * Creates a form to delete a reserva entity.

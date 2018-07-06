@@ -5,7 +5,12 @@ namespace ConcesionariaBundle\Controller;
 use ConcesionariaBundle\Entity\Novedad;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
  * Novedad controller.
@@ -23,11 +28,16 @@ class NovedadController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $novedads = $em->getRepository('ConcesionariaBundle:Novedad')->findAll();
-
+        $novedades = $em->getRepository('ConcesionariaBundle:Novedad')->findAll();
+        $response = new Response();
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $response->setContent(json_encode(array(
+        'inscripciones' => $serializer->serialize($novedad, 'json'),
+        )));
         return $this->render('novedad/index.html.twig', array(
-            'novedads' => $novedads,
+            'novedads' => $novedades,
         ));
     }
 
@@ -39,22 +49,23 @@ class NovedadController extends Controller
      */
     public function newAction(Request $request)
     {
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace($data);
+
         $novedad = new Novedad();
-        $form = $this->createForm('ConcesionariaBundle\Form\NovedadType', $novedad);
-        $form->handleRequest($request);
+        
+        $novedad->setTexto($request->request->get('texto'));
+        $novedad->setNovedad($request->request->get('estado'));
+        $usuariosArray = $request->request->get('usuario');
+        $idUsuario = $usuariosArray['id'];
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository("ConcesionariaBundle:Usuario")->find($idUsuario);
+        $novedad->setUsuario($usuario);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($novedad);
-            $em->flush();
-
-            return $this->redirectToRoute('novedad_show', array('id' => $novedad->getId()));
-        }
-
-        return $this->render('novedad/new.html.twig', array(
-            'novedad' => $novedad,
-            'form' => $form->createView(),
-        ));
+        $em->persist($inscripcion);
+        $em->flush();
+        $result['status'] = 'ok';
+        return new Response(json_encode($result), 200);
     }
 
     /**
@@ -81,21 +92,24 @@ class NovedadController extends Controller
      */
     public function editAction(Request $request, Novedad $novedad)
     {
-        $deleteForm = $this->createDeleteForm($novedad);
-        $editForm = $this->createForm('ConcesionariaBundle\Form\NovedadType', $novedad);
-        $editForm->handleRequest($request);
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace($data);
+        $sn = $this->getDoctrine()->getManager();
+        $nov = $sn->getRepository('ConcesionariaBundle:Novedad')->find($request->request->get('id'));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        $nov->setTexto($request->request->get('texto'));
+        $nov->setEstado($request->request->get('estado'));
 
-            return $this->redirectToRoute('novedad_edit', array('id' => $novedad->getId()));
-        }
+        $usuariosArray= $request->request->get('Usuario');
+        $idUsuario = $usuariosArray['id'];
+       // $em = $this->getDoctrine()->getManager();
+        $usu = $sn->getRepository("ConcesionariaBundle:Usuarios")->find($idUsuario);
+        $nov->setUsuario($usu);
+       
+        $sn->flush();
 
-        return $this->render('novedad/edit.html.twig', array(
-            'novedad' => $novedad,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $result['status'] = 'ok';
+        return new Response(json_encode($result), 200);
     }
 
     /**
@@ -106,16 +120,13 @@ class NovedadController extends Controller
      */
     public function deleteAction(Request $request, Novedad $novedad)
     {
-        $form = $this->createDeleteForm($novedad);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($novedad);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('novedad_index');
+        $sn = $this->getDoctrine()->getManager();
+    
+        $cat = $this->getDoctrine()->getRepository('ConcesionariaBundle:Novedad')->find($id);
+        $sn->remove($cat);
+        $sn->flush();
+        $result['status'] = 'ok';
+        return new Response(json_encode($result), 200);;
     }
 
     /**

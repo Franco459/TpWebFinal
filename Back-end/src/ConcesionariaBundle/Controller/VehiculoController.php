@@ -7,6 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 /**
  * Vehiculo controller.
  *
@@ -23,12 +27,16 @@ class VehiculoController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $vehiculos = $em->getRepository('ConcesionariaBundle:Vehiculo')->findAll();
-
-        return $this->render('vehiculo/index.html.twig', array(
-            'vehiculos' => $vehiculos,
-        ));
+        $vehiculo = $em->getRepository('ConcesionariaBundle:Vehiculo')->findAll();
+        $response = new Response();
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+        $response->setContent(json_encode(array(
+        'vehiculos' => $serializer->serialize($vehiculo, 'json'),
+        )));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response; 
     }
 
     /**
@@ -39,22 +47,22 @@ class VehiculoController extends Controller
      */
     public function newAction(Request $request)
     {
+        
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace($data);
+       
         $vehiculo = new Vehiculo();
-        $form = $this->createForm('ConcesionariaBundle\Form\VehiculoType', $vehiculo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($vehiculo);
-            $em->flush();
-
-            return $this->redirectToRoute('vehiculo_show', array('id' => $vehiculo->getId()));
-        }
-
-        return $this->render('vehiculo/new.html.twig', array(
-            'vehiculo' => $vehiculo,
-            'form' => $form->createView(),
-        ));
+        $vehiculo->setPatente($request->request->get('patente'));
+        $vehiculo->setMarca($request->request->get('marca'));
+        $vehiculo->setModelo($request->request->get('modelo'));
+       $vehiculo ->setPathimagen($request->request->get('pathimagen'));
+       $vehiculo ->setDisponible($request->request->get('disponible'));        
+       
+        $em->persist($vehiculo);
+        $em->flush();
+       
+        $result['status'] = 'ok';
+        return new Response(json_encode($result), 200);
     }
 
     /**
@@ -81,21 +89,15 @@ class VehiculoController extends Controller
      */
     public function editAction(Request $request, Vehiculo $vehiculo)
     {
-        $deleteForm = $this->createDeleteForm($vehiculo);
-        $editForm = $this->createForm('ConcesionariaBundle\Form\VehiculoType', $vehiculo);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('vehiculo_edit', array('id' => $vehiculo->getId()));
-        }
-
-        return $this->render('vehiculo/edit.html.twig', array(
-            'vehiculo' => $vehiculo,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace($data);
+        $sn = $this->getDoctrine()->getManager();
+        $veh = $sn->getRepository('ConcesionariaBundle:Vehiculo')->find($request->request->get('id'));
+        $veh->setPatente($request->request->get('patente'));
+        $veh->setMarca($request->request->get('marca'));
+        $veh->setModelo($request->request->get('modelo'));
+        $veh->setPathimagen($request->request->get('pathimagen'));
+        $veh->setDisponible($request->request->get('disponible'));
     }
 
     /**
@@ -106,16 +108,13 @@ class VehiculoController extends Controller
      */
     public function deleteAction(Request $request, Vehiculo $vehiculo)
     {
-        $form = $this->createDeleteForm($vehiculo);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($vehiculo);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('vehiculo_index');
+        $sn = $this->getDoctrine()->getManager();
+    
+        $cat = $this->getDoctrine()->getRepository('ConcesionariaBundle:Vehiculo')->find($id);
+        $sn->remove($cat);
+        $sn->flush();
+        $result['status'] = 'ok';
+        return new Response(json_encode($result), 200);;
     }
 
     /**

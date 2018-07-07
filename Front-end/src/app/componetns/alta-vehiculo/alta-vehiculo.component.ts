@@ -52,7 +52,7 @@ export class AltaVehiculoComponent implements OnInit {
   {
     this.vehService.getVehiculo().subscribe(
       result=>{
-        this.arrayVehicles = JSON.parse(result.vehiculo);
+        this.arrayVehicles = JSON.parse(result.vehiculos);
       },
       error =>{
 

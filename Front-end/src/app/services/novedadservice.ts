@@ -10,8 +10,7 @@ export class NovedadService {
     }
     getNovedad()
     {
-        return this._http.get("http://localhost/proyectoFinal/web/app_dev.php/novedad/")
-        .map(res => res.json());
+        return this._http.get("http://localhost/proyectoFinal/web/app_dev.php/novedad/").map(res => res.json());
     }
 
     createNovedad(novedad) {

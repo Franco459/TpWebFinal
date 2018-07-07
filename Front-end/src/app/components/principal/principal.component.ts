@@ -45,6 +45,8 @@ export class PrincipalComponent implements OnInit {
   agregarReserva()
   {
     this.reserva.usuario = this.authService.usuarioLogueado;
+    this.reserva.costoRenta = 0;
+    this.reserva.estado = "Pendiente";
     this.reserva.vehiculo = this.resVehicle;
     this.reservaService.createReserva(this.reserva).subscribe(
       data =>
